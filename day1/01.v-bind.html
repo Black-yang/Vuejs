@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <style>
+    .red{
+        color:pink;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- vue 对class和style 做了增强 -->
+    <div id='app'>
+        <p :class="{red:true}">{{msg}}</p>
+        <img v-bind:src="img" alt="">
+        <a v-bind:href="url">跳转</a>
+    </div>
+
+    <script src="./vue221.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello',
+                img: './tu.png',
+                url:'http://www.baidu.com',
+                
+            },
+        })
+    </script>
+</body>
+
+</html>

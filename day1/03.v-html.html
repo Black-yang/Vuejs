@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .bg{
+        color:red;
+    }
+    .font-s{
+        font-size:20px;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- v-html用来渲染带有标签的文本，用的少，会导致xss攻击 -->
+    <div id="app">
+        <p v-html='msg' :class='{"bg":flag,"font-s":flag}'>{{msg}}</p>
+    </div>
+
+    <script src="./vue221.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: '<h1>LOVE<h1>',
+                flag:true,
+            }
+        })
+    </script>
+</body>
+
+</html>

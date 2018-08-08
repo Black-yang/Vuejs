@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- v-model用于双向数据绑定，model和view的数据会同步发生变化，只用在input/textarea/select -->
+    <div id="app">
+        <input type="text" v-model='msg'>
+    </div>
+    <script src="./vue221.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello'
+            }
+        })
+    </script>
+</body>
+
+</html>
