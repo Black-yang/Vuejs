@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+       <input type="text" v-model='name'>
+       <input type="text" v-model='age'>
+       <div>{{message}}</div>
+    </div>
+
+    <script src="./vue221.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                age: '',
+                message: ''
+            },
+            watch: {
+                name: function (newVal,oldVal) {
+                    this.message = newVal+"-"+this.age
+                   
+                },
+                age: function (newVal,oldVal) {
+                    this.message = this.name+"-"+newVal
+                   
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

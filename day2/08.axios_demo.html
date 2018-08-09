@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            width: 600px;
+            margin: 10px auto;
+        }
+
+        .tb {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .tb th {
+            background-color: #0094ff;
+            color: white;
+        }
+
+        .tb td,
+        .tb th {
+            padding: 5px;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        .add {
+            padding: 5px;
+            border: 1px solid black;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="add">
+            编号:
+            <input type="text" v-model='newId'> 品牌名称:
+            <input type="text" v-model='newName' v-myfocus>
+            <input type="button" value="添加" @click='addData'>
+        </div>
+
+        <div class="add">
+            品牌名称:
+            <input type="text" placeholder="请输入搜索条件">
+        </div>
+
+        <div>
+            <table class="tb">
+                <tr>
+                    <th>编号</th>
+                    <th>品牌名称</th>
+                    <th>创立时间</th>
+                    <th>操作</th>
+                </tr>
+                <!-- 动态创建数据 -->
+                <tr v-for='(items,index) in list' :key='index'>
+                    <td>{{items.id}}</td>
+                    <td>{{items.name}}</td>
+                    <!-- 使用过滤器重新格式一个时间格式 -->
+                    <!-- <td>{{items.ctime | myDate('-')}}</td> -->
+                    <td>{{items.ctime | myDate}}</td>
+
+                    <td>
+                        <a href="#" @click='deleteData(index)'>删除</a>
+                    </td>
+                </tr>
+                <!-- 当数组中数据为0的时候显示 没有品牌数据 -->
+                <tr>
+                    <td v-if='list.length===0'>没有品牌数据</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <script src="./vue221.js"></script>
+    <script src="../axios.js"></script>
+
+    <script>
+        // 创建过滤器
+        Vue.filter("myDate", function (time) {
+            var newtime=time.substr(0,10)
+            // var y = time.getFullYear();
+            // var m = time.getMonth() + 1;
+            // var d = time.getDate();
+            
+            // return y + separator + m + separator + d;
+            return newtime;
+        })
+        //注册一个自定义指令
+        Vue.directive("myfocus", {
+            inserted: function (el, binding) {
+                // console.log(el);
+                el.focus();
+            }
+        })
+
+        var vm = new Vue({
+            el: "#app",
+
+            data: {
+                newId: '',
+                newName: '',
+               list: [
+                ]
+            },
+            mounted () {
+                this.getData()
+            },
+            methods: {
+                getData() {
+                    axios.get('http://www.liulongbin.top:3005/api/getprodlist')
+                        .then( (res)=> {
+                            // console.log(res);
+                            console.log(res.data.message);
+                             return this.list=res.data.message;
+                           
+                        })
+                        .catch(function (erro) {
+                            console.log(erro)
+                        })
+                },
+                // 添加数据
+                addData() {
+                    this.list.push({
+                        id: this.newId,
+                        name: this.newName,
+                        ctime: new Date()
+                    })
+                },
+                
+                // 删除数据
+                deleteData(index) {
+                    this.list.splice(index, 1)
+                }
+            },
+            
+        })
+    </script>
+</body>
+
+</html>
