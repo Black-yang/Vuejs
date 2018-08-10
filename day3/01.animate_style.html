@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .fade-enter {
+            margin-left: 100px;
+        }
+        .fade-enter-active {
+            transition: all 2s;
+        }
+        .fade-enter-to {
+            margin-left: 0px;
+        }
+        .fade-leave {
+            margin-left: 0px;
+        }
+        .fade-leave-active {
+            transition: all 2s;
+        }
+        .fade-leave-to {
+            margin-left: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='app'>
+        <button @click='flag=!flag'>点我</button>
+        <!-- 如果transition里面没有name属性，那么在样式里 就是v-enter... -->
+        <transition name='fade'>
+            <!-- 动画执行需要指令v-if、v-show、动态组件 -->
+            <p v-show='flag'>hello</p>
+        </transition>
+    </div>
+
+    <script src="../vue221.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag: true
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>

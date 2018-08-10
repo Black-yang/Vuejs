@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <test></test>
+    </div>
+
+    <template id='tpl'>
+        <div>
+        <p>hello</p>
+        </div>
+    </template>
+
+    <script src="../vue2.js"></script>
+
+    <script>
+        // 创建组件 第一个参数是组件名，第二个参数是需要对dom元素的修饰
+        Vue.component('test', {
+            template: '#tpl'
+        })
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

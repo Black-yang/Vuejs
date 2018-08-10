@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../animate.css">
+    <script src="../vue2.js"></script>
+
+</head>
+
+<body>
+    <div id='app'>
+        <button @click='flag=!flag'>点我</button>
+        <!-- 如果transition里面没有name属性，那么在样式里 就是v-enter... -->
+        <transition name='fade' 
+        v-on:before-enter="beforeEnter" 
+        v-on:enter="enter" 
+        v-on:leave="leave">
+            <!-- 动画执行需要指令v-if、v-show、动态组件 -->
+            <p v-show='flag'>hello</p>
+        </transition>
+    </div>
+
+    
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag: true
+            },
+            methods: {
+                beforeEnter(el) {
+                    el.style.paddingLeft = '100px';
+                },
+                enter(el,done) {
+                    console.log('enter')
+                    var step = 1;
+                    var timeId = setInterval(function () {
+                        el.style.paddingLeft = (100 - step) + 'px';
+                        step++;
+                        if (step == 100) {
+                            clearInterval(timeId);
+                            done()
+                        }
+                    }, 5)
+                  
+                },
+                leave(el) {
+                    console.log('离开')
+                },
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>
