@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <father></father>
+    </div>
+    <template id='fathertpl'>
+        <div>
+            <p>我是父亲</p>
+            <son></son>
+            <sister></sister>
+        </div>
+    </template>
+
+    <template id='sontpl'>
+        <div>
+            <p>我是哥哥,我妹妹叫{{name}},
+                <button @click='sistername'>点我告诉我妹妹</button>
+            </p>
+        </div>
+    </template>
+
+    <template id='daugtertpl'>
+        <div>
+            <p>我是妹妹，我哥哥喊我{{sistername}}</p>
+        </div>
+    </template>
+
+    <script src="../vue2.js"></script>
+
+    <script>
+        var bus = new Vue()
+        Vue.component('father', {
+            template: '#fathertpl',
+
+            components: {
+                son: {
+                    template: '#sontpl',
+                    data() {
+                        return {
+                            name: '婷'
+                        }
+                    },
+                    methods: {
+                        sistername() {
+                            bus.$emit('tellname', this.name)
+                        }
+                    }
+                },
+                sister: {
+                    template: '#daugtertpl',
+                    data() {
+                        return {
+                            sistername: '???'
+                        }
+                    },
+                    mounted() {
+                        bus.$on('tellname', (data) => {
+                            this.sistername = data
+                        })
+                    }
+
+                }
+
+            }
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

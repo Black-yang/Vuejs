@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+            <father></father>
+    </div>
+    <template id='fathertpl'>
+        <div>
+            <p>我是父亲,我的儿子叫{{msg}}</p>
+            <son v-bind:myname='msg'></son>
+        </div>
+    </template>
+
+    <template id='sontpl'>
+        <div>
+            <p>我是儿子,我爸爸叫我{{myname}}</p>
+        </div>
+    </template>
+
+    <script src="../vue2.js"></script>
+
+    <script>
+        Vue.component('father', {
+            template: '#fathertpl',
+            data(){
+                return{ msg:'小明'}
+            },
+            components: {
+                son: {
+                    props:["myname"],
+                    template: '#sontpl'
+                }
+            }
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>
