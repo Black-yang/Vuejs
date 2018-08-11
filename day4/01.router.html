@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    ul{
+        list-style: none;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <router-link to="/playlist/1">歌单</router-link>
+        <router-link to="/toplist/2">排行榜</router-link>
+
+        <router-view></router-view>
+
+    </div>
+    <template id='playtpl'>
+        <div>
+            <p>往后余生</p>
+            <p>啦啦啦</p>
+        </div>
+    </template>
+
+    <template id='toptpl'>
+        <div>
+            <!-- 点击one 监听事件 跳转到下一面数据 -->
+            <p @click='change'>one</p>
+            <p>two</p>
+            <router-view></router-view>
+        </div>
+        
+    </template>
+
+    <template id='musictpl'>
+        <div>
+            <ul>
+                <li>1卡路里</li>
+                <li>2彩虹</li>
+                <li>3听妈妈的话</li>
+                <li>4往事云烟</li>
+                <li>5最初的梦想</li>
+            </ul>
+        </div>
+    </template>
+
+    <script src="../vue2.js"></script>
+    <script src="../vue-router.js"></script>
+
+    <script>
+        var playc = Vue.component('play', {
+            template: '#playtpl'
+        })
+
+        var topc = Vue.component('top', {
+            template: '#toptpl',
+            // 通过$route.params.id 可以获取参数
+            mounted() {
+                console.log(this.$route.params.id)
+            },
+            watch: {
+                // 监听同一组件，组件被复用
+                '$route' (to, from) {
+                    console.log(to)
+                    console.log(from)
+                }
+            },
+            methods: {
+                change(){
+                    // 使用name方便，比直接写path路径好
+                    // 通过$router访问路由实例，编程式的导航
+                    this.$router.push({name:'music'})
+                }
+            }
+        })
+
+        var music=Vue.component('music',{
+            template:'#musictpl'
+        })
+
+        var router = new VueRouter({
+            routes: [{
+                    name: 'play',
+                    path: '/playlist/:id',
+                    component: playc
+                },
+                {
+                    name: 'top',
+                    path: '/toplist/:id',
+                    component: topc,
+                    // 嵌套路由，使用children
+                    children:[
+                        {name:'music',path:'list',component:music}
+
+                    ]
+                },
+                {path:'*',redirect:{name:'top'}}
+            ]
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            router: router
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "01-webpack-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "webpack-dev-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.9.7"
+  }
+}
